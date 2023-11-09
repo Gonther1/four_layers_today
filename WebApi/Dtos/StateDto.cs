@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Dtos
+namespace WebApi.Dtos;
+
+public class StateDto
 {
-    public class StateDto
-    {
-        
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public int IdcountryFk { get; set; }
 }
