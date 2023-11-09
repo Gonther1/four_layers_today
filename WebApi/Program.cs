@@ -1,5 +1,8 @@
+using System.Reflection;
+using AspNetCoreRateLimit;
 using Dominio.Data;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +13,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureCors();
+
+builder.Services.AddAplicationServices();
+
+builder.Services.ConfigureRateLimiting();
+
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+
 builder.Services.AddDbContext<WebApiContext>(options =>
 {
-    string ? connectionString = builder.Configuration.GetConnectionString("MySqlConnect");
+    string connectionString = builder.Configuration.GetConnectionString("MySqlConnect");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
@@ -25,7 +36,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("CorsPolicy");
 
+app.UseIpRateLimiting();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = services.GetRequiredService<WebApiContext>();
+        await context.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        var _logger = loggerFactory.CreateLogger<Program>();
+        _logger.LogError(ex, "Ocurrio un error durante la migracion !!");
+    }
+}
 
 app.UseHttpsRedirection();
 
