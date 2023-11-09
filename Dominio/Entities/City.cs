@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace Dominio.Entities;
 
-public partial class City
+public partial class City : BaseEntity
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = null!;
 
     public int IdstateFk { get; set; }

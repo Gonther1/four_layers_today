@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Dominio.Entities;
 
-public partial class State
+public partial class State : BaseEntity
 {
-    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
