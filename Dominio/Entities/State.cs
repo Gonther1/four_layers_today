@@ -5,7 +5,6 @@ namespace Dominio.Entities;
 
 public partial class State : BaseEntity
 {
-
     public string Name { get; set; } = null!;
 
     public int IdcountryFk { get; set; }
