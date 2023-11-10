@@ -8,4 +8,5 @@ namespace Dominio.Interfaces;
 
 public interface ICityRepository : IGenericRepository<City>
 {
+    Task<City> GetCustomerByCityName (string city);
 }

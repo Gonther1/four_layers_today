@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dominio.Data;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Repositories
 {
@@ -16,5 +17,6 @@ namespace Application.Repositories
         {
             _context = context;
         }
+
     }
 }
