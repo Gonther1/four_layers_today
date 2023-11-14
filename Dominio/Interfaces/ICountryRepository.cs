@@ -9,4 +9,7 @@ namespace Dominio.Interfaces;
 public interface ICountryRepository : IGenericRepository<Country>
 {
     Task<Country> GetPaisByName(string name);
+    Task<Country> GetCountryAndStates();
+/*     Task<IEnumerable<Country>> GetCountriesAndStates();
+    Task<IEnumerable<Country>> GetCountriesAndCities(); */
 }

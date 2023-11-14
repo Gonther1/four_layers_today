@@ -27,6 +27,18 @@ public class CountryController : BaseController
         var entity = await _unitOfWork.Countries.GetAllAsync();
         return _mapper.Map<List<CountryDto>>(entity);
     }
+
+    [HttpGet("CountryByName/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<CountryDto>> getPaisByName(string name)
+    {
+        var entity = await _unitOfWork.Countries.GetPaisByName(name);
+        if (entity == null)
+            return NotFound();
+        return _mapper.Map<CountryDto>(entity);
+    }
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

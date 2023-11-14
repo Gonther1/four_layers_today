@@ -18,6 +18,11 @@ public class CountryRepository : GenericRepository<Country>, ICountryRepository
         _context = context;
     }
 
+    public Task<Country> GetCountryAndStates()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Country> GetPaisByName(string country)
     {
         return await _context.Countries.Where(_country => _country.Name.Trim().ToLower() == country.Trim().ToLower()).FirstAsync();
